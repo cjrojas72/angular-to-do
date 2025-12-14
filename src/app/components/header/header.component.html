@@ -1,0 +1,53 @@
+<!-- <header class="header-section">
+    <nav>
+        <div class="app-title">
+            <span>To-Do-Lister</span>
+        </div>
+        <div class="nav-links">
+            <ul>
+                <li routerLink="/" >
+                    <a routerLink="/">Home</a>
+                </li>
+                <li routerLink="/profile">
+                    <a routerLink="/profile">Settins</a>
+                </li>
+            </ul>
+        </div>
+        <div class="user-controls">
+            <button class="profile-icon">
+                <i class="fas fa-user-circle"></i> 
+            </button>
+            <a href="/logout" class="sign-out-button">Sign Out</a>
+        </div> 
+    </nav>
+</header> -->
+
+
+
+<header class="p-4 rounded-b-lg border-b border-gray-200 bg-black">
+          <nav class="flex justify-between items-center relative">
+            
+            <h1 routerLink="/" class="text-2xl sm:text-3xl font-extrabold text-white">To-do-Lister</h1>
+
+            <div class="relative flex-shrink-0">
+              <button
+                (click)="toggleProfileDropdown()"
+                class="p-2 rounded-full bg-gray-300 text-gray-700 hover:bg-gray-500 transition duration-150 focus:outline-none focus:ring-2 focus:ring-gray-700"
+                aria-label="User Profile">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </button>
+
+              @if (showProfileDropdown()) {
+                <div
+                  class="absolute right-0 mt-2 w-48 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-10 origin-top-right transform transition-opacity duration-150"
+                  (mouseleave)="showProfileDropdown.set(false)"
+                >
+                  <a routerLink="/profile" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-lg transition duration-100">Settings</a>
+                  <button class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 rounded-b-lg transition duration-100">Logout</button>
+                </div>
+              }
+            </div>
+          </nav>
+        </header>

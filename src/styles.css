@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+body{
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #EAEAEA;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+.card{
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+        transition: 0.3s;
+        border-radius: 1.5rem;
+        width: 100%;
+        padding: 1.5rem;
+        --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.page-container{
+    margin-top: 1rem;
+}
