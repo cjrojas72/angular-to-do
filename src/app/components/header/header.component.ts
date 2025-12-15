@@ -10,6 +10,8 @@ import { RouterLink } from '@angular/router';
 export class HeaderComponent {
   showProfileDropdown = signal(false)
 
+  profileName = signal("Profile")
+
   toggleProfileDropdown(): void {
       this.showProfileDropdown.update(value => !value);
   }
