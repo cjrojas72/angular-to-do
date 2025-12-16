@@ -1,6 +1,13 @@
-<div class="container">
+@if (currentUser$ | async; as user) {
+  <div id="home-page" class="container">
   <app-header></app-header>
   <main>
     <router-outlet></router-outlet>
   </main>
 </div>
+} @else {
+  <div id="login-page" class="container">
+    <app-login></app-login>
+  </div>
+}
+

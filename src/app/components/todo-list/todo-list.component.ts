@@ -36,7 +36,7 @@ export class TodoListComponent implements OnInit{
   }
 
   getFirebase(){
-    this.todoService.getFirebase()
+    this.todoService.getFireBase()
   }
 
 
