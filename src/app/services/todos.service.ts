@@ -1,5 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Todo } from '../model/todo.type';
+import { collection, getDocs } from "firebase/firestore"; 
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { environment } from '../../environments/environment.development';
+
+
+// Initialize Firebase
+const app = initializeApp(environment.firebase);
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
 
 @Injectable({
   providedIn: 'root'
@@ -53,4 +64,13 @@ export class TodosService {
   addTodo( todo: Todo ): void {
     this.todoItems.push(todo)
   }
+
+  async getFirebase(){
+    const querySnapshot = await getDocs(collection(db, "users"));
+    const userName = ''
+    querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${JSON.stringify(doc.data())} user`);
+    });
+  }
+  
 }

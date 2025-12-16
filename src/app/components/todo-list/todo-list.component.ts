@@ -35,9 +35,14 @@ export class TodoListComponent implements OnInit{
     this.todoItems.set(this.todoService.getTodos())
   }
 
+  getFirebase(){
+    this.todoService.getFirebase()
+  }
+
 
   ngOnInit(): void {
     this.getTodos()
+    this.getFirebase()
   }
   
 }
