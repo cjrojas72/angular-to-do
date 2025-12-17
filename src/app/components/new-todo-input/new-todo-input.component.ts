@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { TodosService } from '../../services/todos.service';
 import { Todo } from '../../model/todo.type';
+import { EventsService } from '../../services/events.service';
 
 @Component({
   selector: 'app-new-todo-input',
@@ -10,13 +11,15 @@ import { Todo } from '../../model/todo.type';
 })
 export class NewTodoInputComponent {
 
-  todoService = inject(TodosService)
+  private todoService = inject(TodosService)
+  private eventService = inject(EventsService)
+
   newTodoTitle = signal('')
   
-  tempId = Math.floor(Math.random() * 2000)
-  tempUser = 5
+  // tempId = Math.floor(Math.random() * 2000)
+  // tempUser = 5
 
-  addTodo(){
+  async addTodo(){
 
     let todoTitle = this.newTodoTitle().trim()
 
@@ -24,17 +27,12 @@ export class NewTodoInputComponent {
       return
     }
 
-    const newTodo: Todo = {
-      id: this.tempId,
-      userId: this.tempUser,
-      title: todoTitle,
-      completed: false,
-      createdAt: new Date(),
-    };
-
     // console.log(newTodo)
-    this.todoService.addTodo(newTodo)
+    await this.todoService.addTodo(todoTitle)
     this.newTodoTitle.set('')
+
+    this.eventService.emitTodoAdded()
+
     
   }
 
