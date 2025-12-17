@@ -14,11 +14,11 @@ import { Subscription } from 'rxjs';
 })
 export class TodoListComponent implements OnInit, OnDestroy{
   
-  todoService = inject(TodosService)
-  todoItems = signal(<Array<Todo>>([]))
-
+  private todoService = inject(TodosService)
   private eventService = inject(EventsService)
   private subscription!: Subscription
+
+  todoItems = signal(<Array<Todo>>([]))
 
   // private initialTodos = [
   //   { id: 1, title: 'Review Angular Signals & Immutability', completed: true, createdAt: new Date(Date.now() - 86400000) },
@@ -26,13 +26,13 @@ export class TodoListComponent implements OnInit, OnDestroy{
   //   { id: 3, title: 'Buy groceries (milk, eggs, bread)', completed: false, createdAt: new Date() },
   // ]
 
-  deleteTodo(id: string) {
-    this.todoService.deleteTodo(id)
+  async deleteTodo(id: string) {
+    await this.todoService.deleteTodo(id)
     this.getTodos()
   }
 
-  toggleCompleted(id: string) {
-    this.todoService.updateTodo(id)
+  toggleCompleted(id: string, completedStatus: boolean) {
+    this.todoService.updateTodo(id, completedStatus)
     this.getTodos()
   }
 

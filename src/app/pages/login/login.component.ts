@@ -17,6 +17,8 @@ export class LoginComponent {
   }
 
   login(){
+    console.log('clicked')
     this.authSerivice.signIn(this.testUser.email, this.testUser.pw)
+    
   }
 }

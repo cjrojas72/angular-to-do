@@ -20,7 +20,7 @@
                 type="checkbox"
                 class="w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 rounded-md focus:ring-indigo-500 cursor-pointer"
                 [checked]="todo.completed"
-                (change)="toggleCompleted(todo.id)"
+                (change)="toggleCompleted(todo.id, todo.completed)"
               />
 
               <div class="flex-grow ml-4">

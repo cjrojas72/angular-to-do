@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Todo } from '../model/todo.type';
 import { FirebaseService } from './firebase.service';
 import { AuthService } from './auth.service';
-import { collection, addDoc , query, where, getDocs, orderBy } from "firebase/firestore";
+import { collection, addDoc , query, where, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
 
 
 @Injectable({
@@ -10,34 +10,34 @@ import { collection, addDoc , query, where, getDocs, orderBy } from "firebase/fi
 })
 export class TodosService {
 
-  firebaseService = inject(FirebaseService)
-  authService = inject(AuthService)
-
-  currentUser$ = this.authService.getCurrentUser()
-  db = this.firebaseService.db
+  private firebaseService = inject(FirebaseService)
+  private authService = inject(AuthService)
+  private db = this.firebaseService.db
+  private currentUser$ = this.authService.getCurrentUser()
+  
 
   todoItems: Todo[] = [
-    { 
-      userId: "1", 
-      id: "1", 
-      title: 'Review Angular Signals & Immutability', 
-      completed: true, 
-      createdAt: new Date(Date.now() - 86400000) 
-    },
-    { 
-      userId: "1", 
-      id: "2", 
-      title: 'Plan the weekly schedule', 
-      completed: false, 
-      createdAt: new Date(Date.now() - 3600000) 
-    },
-    { 
-      userId: "1", 
-      id: "3", 
-      title: 'Buy groceries (milk, eggs, bread)', 
-      completed: false, 
-      createdAt: new Date() 
-    },
+    // { 
+    //   userId: "1", 
+    //   id: "1", 
+    //   title: 'Review Angular Signals & Immutability', 
+    //   completed: true, 
+    //   createdAt: new Date(Date.now() - 86400000) 
+    // },
+    // { 
+    //   userId: "1", 
+    //   id: "2", 
+    //   title: 'Plan the weekly schedule', 
+    //   completed: false, 
+    //   createdAt: new Date(Date.now() - 3600000) 
+    // },
+    // { 
+    //   userId: "1", 
+    //   id: "3", 
+    //   title: 'Buy groceries (milk, eggs, bread)', 
+    //   completed: false, 
+    //   createdAt: new Date() 
+    // },
   ]
 
 
@@ -71,32 +71,53 @@ export class TodosService {
         this.todoItems.push(todo)
       });
 
-      console.log(this.todoItems)
+      //console.log(this.todoItems)
 
     return this.todoItems
   }
 
 
-  updateTodo( id: string): void{
-    if(!this.currentUser$){
-      return console.log("No logged in user")
-    }
+  // updateTodo( id: string): void{
+  //   if(!this.currentUser$){
+  //     return console.log("No logged in user")
+  //   }
 
-    let todoItem = this.todoItems.find( todo => todo.id === id)
+  //   let todoItem = this.todoItems.find( todo => todo.id === id)
 
 
-    if(todoItem){
-      todoItem.completed = !todoItem.completed
-    }
+  //   if(todoItem){
+  //     todoItem.completed = !todoItem.completed
+  //   }
+  // }
+
+  async updateTodo( id: string, completedStatus: boolean ): Promise<void>{
+      if(!this.currentUser$){
+        return console.log("No logged in user")
+     }
+
+     const docRef = doc(this.db, "todos", id)
+
+     await updateDoc(docRef, {
+      completed: !completedStatus
+     })
   }
+  // deleteTodo( id: string): void{
+  //   if(!this.currentUser$){
+  //     return console.log("No logged in user")
+  //   }
 
-  deleteTodo( id: string): void{
+  //   this.todoItems = this.todoItems.filter(todo => todo.id !== id)
+
+  // }
+
+  async deleteTodo( id: string ): Promise<void>{
     if(!this.currentUser$){
       return console.log("No logged in user")
     }
 
-    this.todoItems = this.todoItems.filter(todo => todo.id !== id)
-
+    const docRef = doc(this.db, "todos", id);
+  
+    await deleteDoc(docRef);
   }
 
   // addTodo( todo: Todo ): void {
