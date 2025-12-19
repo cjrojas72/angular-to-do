@@ -1,0 +1,42 @@
+<div class="animate-fade-in">
+  <p class="text-gray-500 mb-6 text-center">
+    Enter your email address and we'll send you a link to reset your password.
+  </p>
+
+  <div class="space-y-4">
+    <div>
+      <input 
+        [formControl]="email"
+        type="email" 
+        placeholder="your-email@example.com"
+        class="w-full bg-transparent border border-gray-500/30 outline-none rounded-full py-2.5 px-4 focus:border-orange-500 transition"
+        [class.border-red-500]="email.invalid && email.touched">
+      
+      @if (email.invalid && email.touched) {
+        <p class="text-red-500 text-xs mt-1 ml-4">Please enter a valid email.</p>
+      }
+    </div>
+
+    @if (message()) {
+      <div [class]="isError() ? 'text-red-600' : 'text-green-600'" 
+           class="p-3 bg-gray-50 rounded-lg text-center text-xs font-medium">
+        {{ message() }}
+      </div>
+    }
+
+    <button 
+      type="button" 
+      (click)="onSubmit()"
+      [disabled]="email.invalid || isLoading()"
+      class="w-full py-2.5 bg-orange-500 text-white font-semibold rounded-full shadow-md hover:bg-orange-600 transition disabled:opacity-50 cursor-pointer">
+      {{ isLoading() ? 'Sending...' : 'Send Reset Link' }}
+    </button>
+
+    <button 
+      type="button" 
+      (click)="backToLogin.emit()"
+      class="w-full text-center text-gray-400 mt-2 hover:text-gray-600 transition cursor-pointer">
+      ← Back to Login
+    </button>
+  </div>
+</div>

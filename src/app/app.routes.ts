@@ -24,10 +24,4 @@ export const routes: Routes = [
             return ProfileComponent
         }
     },
-    {
-        path: 'signup',
-        loadComponent: () =>{
-            return SignupComponent
-        }
-    }
 ];

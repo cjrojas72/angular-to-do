@@ -2,12 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { SignupComponent } from '../signup/signup.component';
+import { ForgotPwComponent } from '../forgot-pw/forgot-pw.component';
 
 type AuthMode = 'login' | 'signup' | 'forgot'
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, SignupComponent],
+  imports: [ReactiveFormsModule, SignupComponent, ForgotPwComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

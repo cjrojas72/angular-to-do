@@ -121,7 +121,7 @@
         <app-signup></app-signup>
       }
       @case ('forgot') {
-        
+        <app-forgot-pw (backToLogin)="setMode('login')"></app-forgot-pw>
       }
     }
 

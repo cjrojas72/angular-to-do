@@ -10,10 +10,17 @@ import { collection, addDoc , query, where, getDocs, doc, deleteDoc, updateDoc }
 })
 export class TodosService {
 
-  private firebaseService = inject(FirebaseService)
-  private authService = inject(AuthService)
-  private db = this.firebaseService.db
-  private currentUser$ = this.authService.getCurrentUser()
+  private firebaseService = inject(FirebaseService);
+  private authService = inject(AuthService);
+  private db = this.firebaseService.db;
+  
+  private get userId() {
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      throw new Error("User must be logged in to perform this action");
+    }
+    return user.uid;
+  }
   
 
   todoItems: Todo[] = [
@@ -48,7 +55,7 @@ export class TodosService {
 
   async getTodos(): Promise<Array<Todo>> {
 
-    this.todoItems = []
+    this.todoItems = [];
 
     const q = query(
         collection(this.db, "todos"), 
@@ -58,7 +65,7 @@ export class TodosService {
     const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           //console.log(`${doc.id} => ${JSON.stringify(doc.data())} user`);
-          const {userId, title, completed, createdAt} = doc.data()
+          const {userId, title, completed, createdAt} = doc.data();
 
           let todo: Todo = {
           id: doc.id,
@@ -68,12 +75,12 @@ export class TodosService {
           createdAt: createdAt?.toDate()
           }
 
-        this.todoItems.push(todo)
+        this.todoItems.push(todo);
       });
 
       //console.log(this.todoItems)
 
-    return this.todoItems
+    return this.todoItems;
   }
 
 
@@ -91,11 +98,11 @@ export class TodosService {
   // }
 
   async updateTodo( id: string, completedStatus: boolean ): Promise<void>{
-      if(!this.currentUser$){
-        return console.log("No logged in user")
+      if(!this.userId){
+        return console.log("No logged in user");
      }
 
-     const docRef = doc(this.db, "todos", id)
+     const docRef = doc(this.db, "todos", id);
 
      await updateDoc(docRef, {
       completed: !completedStatus
@@ -111,8 +118,8 @@ export class TodosService {
   // }
 
   async deleteTodo( id: string ): Promise<void>{
-    if(!this.currentUser$){
-      return console.log("No logged in user")
+    if(!this.userId){
+      return console.log("No logged in user");
     }
 
     const docRef = doc(this.db, "todos", id);
@@ -128,8 +135,8 @@ export class TodosService {
   //   this.todoItems.push(todo)
   // }
   async addTodo( todo: string): Promise<void>{
-    if(!this.currentUser$){
-      return console.log("No logged in user")
+    if(!this.userId){
+      return console.log("No logged in user");
     }
 
     try {
@@ -139,9 +146,9 @@ export class TodosService {
         createdAt: new Date(),
         userId: this.authService.getCurrentUser()?.uid
       });
-      console.log("Document written with ID: ", newTodo.id)
+      console.log("Document written with ID: ", newTodo.id);
     } catch (e) {
-      console.error("Error adding document: ", e)
+      console.error("Error adding document: ", e);
       throw e;
     }
   }
