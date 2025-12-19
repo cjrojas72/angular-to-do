@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal, Type } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-header',
@@ -9,11 +10,13 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
-  showProfileDropdown = signal(false)
-  authService = inject(AuthService)
+  showProfileDropdown = signal(false);
+  private authService = inject(AuthService);
 
-  currentUser = this.authService.getCurrentUser()?.email
-  profileName = signal<string | null | undefined>('profile')
+  private currentUser = this.authService.getCurrentUser()?.email;
+  profileName = signal<string | null | undefined>('profile');
+
+  private router = inject(Router)
 
   logOut(){
     this.authService.signOut();
@@ -24,6 +27,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.profileName.set(this.currentUser)
+    this.profileName.set(this.currentUser);
   }
 }

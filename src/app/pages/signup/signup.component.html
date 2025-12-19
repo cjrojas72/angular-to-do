@@ -1,0 +1,45 @@
+
+<div>
+    <h2 class="text-2xl font-semibold mb-2 text-center text-gray-800">Create Account</h2>
+    <p class="text-center mb-8 text-gray-400">Join us to start managing your tasks</p>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="space-y-4">
+      
+      <div>
+        <label class="block mb-1 ml-4 text-xs font-medium">Full Name</label>
+        <input formControlName="displayName" type="text" placeholder="John Doe"
+          class="w-full bg-transparent border border-gray-500/30 outline-none rounded-full py-2.5 px-4 focus:border-blue-500 transition">
+      </div>
+
+      <div>
+        <label class="block mb-1 ml-4 text-xs font-medium">Email Address</label>
+        <input formControlName="email" type="email" placeholder="name@example.com"
+          class="w-full bg-transparent border border-gray-500/30 outline-none rounded-full py-2.5 px-4 focus:border-blue-500 transition">
+      </div>
+
+      <div>
+        <label class="block mb-1 ml-4 text-xs font-medium">Password</label>
+        <input formControlName="password" type="password" placeholder="••••••••"
+          class="w-full bg-transparent border border-gray-500/30 outline-none rounded-full py-2.5 px-4 focus:border-blue-500 transition">
+      </div>
+
+      <div>
+        <label class="block mb-1 ml-4 text-xs font-medium">Confirm Password</label>
+        <input formControlName="confirmPassword" type="password" placeholder="••••••••"
+          class="w-full bg-transparent border border-gray-500/30 outline-none rounded-full py-2.5 px-4 focus:border-blue-500 transition">
+        
+        @if (signupForm.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched) {
+          <p class="text-red-500 text-xs mt-1 ml-4">Passwords do not match.</p>
+        }
+      </div>
+
+      <button type="submit" [disabled]="signupForm.invalid"
+        class="w-full py-3 mt-4 bg-blue-500 text-white font-semibold rounded-full shadow-md hover:bg-blue-600 transition disabled:opacity-50 disabled:pointer-events-none">
+        Sign Up
+      </button>
+    </form>
+
+    <p class="text-center mt-6">
+      Already have an account? <a href="/login" class="text-blue-500 underline">Log in</a>
+    </p>
+  </div>

@@ -1,13 +1,19 @@
-@if (currentUser$ | async; as user) {
-  <div id="home-page" class="container">
+<div class="container min-h-screen">
+  @if (currentUser$ | async; as user) {
+  <div id="home-page" class="">
   <app-header></app-header>
   <main>
     <router-outlet></router-outlet>
   </main>
 </div>
 } @else {
-  <div id="login-page" class="container">
+  <div id="login-page" class="flex items-center justify-center min-h-screen">
+      <router-outlet></router-outlet>
+    </div>
+  <!-- <div id="login-page" class="mt-[240px]">
     <app-login></app-login>
-  </div>
+  </div> -->
 }
+</div>
+
 
