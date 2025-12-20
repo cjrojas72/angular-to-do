@@ -27,6 +27,7 @@
         <label class="block mb-1 ml-4 text-xs font-medium">Confirm Password</label>
         <input formControlName="confirmPassword" type="password" placeholder="••••••••"
           class="w-full bg-transparent border border-gray-500/30 outline-none rounded-full py-2.5 px-4 focus:border-blue-500 transition">
+        <p class="text-center my-4 text-gray-400">* Must be at least 6 characters long</p>
         
         @if (signupForm.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched) {
           <p class="text-red-500 text-xs mt-1 ml-4">Passwords do not match.</p>

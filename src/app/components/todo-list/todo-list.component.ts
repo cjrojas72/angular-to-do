@@ -6,6 +6,8 @@ import { Todo } from '../../model/todo.type';
 import { EventsService } from '../../services/events.service';
 import { Subscription } from 'rxjs';
 
+type filter = 'All' | 'In-progress' | 'Completed';
+
 @Component({
   selector: 'app-todo-list',
   imports: [DatePipe, NewTodoInputComponent],
@@ -14,11 +16,13 @@ import { Subscription } from 'rxjs';
 })
 export class TodoListComponent implements OnInit, OnDestroy{
   
-  private todoService = inject(TodosService)
-  private eventService = inject(EventsService)
-  private subscription!: Subscription
+  private todoService = inject(TodosService);
+  private eventService = inject(EventsService);
+  private subscription!: Subscription;
 
-  todoItems = signal(<Array<Todo>>([]))
+  todoItems = signal(<Array<Todo>>([]));
+  filterMode = signal<filter>('All');
+  filteredTodoItems = signal(<Array<Todo>>([]));
 
   // private initialTodos = [
   //   { id: 1, title: 'Review Angular Signals & Immutability', completed: true, createdAt: new Date(Date.now() - 86400000) },
@@ -27,34 +31,58 @@ export class TodoListComponent implements OnInit, OnDestroy{
   // ]
 
   async deleteTodo(id: string) {
-    await this.todoService.deleteTodo(id)
-    this.getTodos()
+    await this.todoService.deleteTodo(id);
+    this.getTodos();
   }
 
-  toggleCompleted(id: string, completedStatus: boolean) {
-    this.todoService.updateTodo(id, completedStatus)
-    this.getTodos()
+  async toggleCompleted(id: string, completedStatus: boolean) {
+    await this.todoService.updateTodo(id, completedStatus);
+    this.getTodos();
   }
 
   async getTodos(){
-    const todos = await this.todoService.getTodos()
+    const todos = await this.todoService.getTodos();
 
-    this.todoItems.set(this.getSortedList(todos))
+    this.todoItems.set(todos);
 
     //console.log(this.todoItems())
     
+  }
+
+  setFilter(newFilter: filter) {
+    this.filterMode.set(newFilter);
   }
 
   getSortedList(list: Todo[]) {
     if (!list) return []
 
     return [...list].sort((a, b) => {
-      const timeA = a.createdAt?.getTime() ?? 0
-      const timeB = b.createdAt?.getTime() ?? 0
+      const timeA = a.createdAt?.getTime() ?? 0;
+      const timeB = b.createdAt?.getTime() ?? 0;
 
-      return timeB - timeA; // Newest first
+      return timeB - timeA;
     });
   }
+
+  filteredTodos = computed(() =>{
+    const currentTodos = this.getSortedList(this.todoItems());
+    const status = this.filterMode();
+
+    //console.log(currentTodos)
+
+    if (status === "All"){
+      return currentTodos;
+    }
+    else if ( status === "Completed"){
+      return currentTodos.filter(todo => todo.completed);  
+    }
+    else if ( status === "In-progress"){
+      return currentTodos.filter(todo => !todo.completed);
+    }
+
+    return currentTodos;
+
+  })
 
 
  
@@ -62,8 +90,8 @@ export class TodoListComponent implements OnInit, OnDestroy{
     this.getTodos()
 
     this.subscription = this.eventService.todoAdded$.subscribe(() => {
-      console.log('Event Service notified us! Refreshing...')
-      this.getTodos()
+      console.log('Event Service notified us! Refreshing...');
+      this.getTodos();
     })
 
   }

@@ -4,12 +4,17 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-  onAuthStateChanged 
+  onAuthStateChanged,
+  signInWithPopup, 
+  GoogleAuthProvider, 
+  sendPasswordResetEmail,
+  updatePassword, 
+  reauthenticateWithCredential, 
+  EmailAuthProvider
 } from 'firebase/auth';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 import { FirebaseService } from './firebase.service';
-import { signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail } from "firebase/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -99,4 +104,27 @@ export class AuthService {
       return { success: false, error: error.message };
     }
   }
+
+  async updateUserPassword(currentPw: string, newPw: string) {
+    const auth = this.firebaseService.auth;
+    const user = auth.currentUser;
+
+    if (!user || !user.email) throw new Error("No user found");
+
+    const credential = EmailAuthProvider.credential(user.email, currentPw);
+
+    try {
+      // 2. Re-authenticate the user
+      await reauthenticateWithCredential(user, credential);
+
+      // 3. Update the password
+      await updatePassword(user, newPw);
+      
+      return { success: true };
+    } catch (error: any) {
+      // Common errors: 'auth/wrong-password' or 'auth/too-many-requests'
+      throw error;
+    }
+  }
+
 }

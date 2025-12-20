@@ -8,12 +8,48 @@
       <app-new-todo-input></app-new-todo-input>
     </div>
     <div>
+      <div class="flex justify-center border-gray-100 my-6 space-x-4">
+        <button (click)="setFilter('All')" 
+          [class.text-white]="filterMode() === 'All'"
+          [class.border-blue-500]="filterMode() === 'All'"
+          [class.bg-gray-400]="filterMode() === 'All'"
+          class="py-2 px-5 font-semibold border-b-2 border-transparent transition rounded-full cursor-pointer text-sm">
+          All
+        </button>
+        <button (click)="setFilter('In-progress')" 
+          [class.text-white]="filterMode() === 'In-progress'"
+          [class.border-blue-500]="filterMode() === 'In-progress'"
+          [class.bg-gray-400]="filterMode() === 'In-progress'"
+          class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm">
+          In Progress
+        </button>
+        <button (click)="setFilter('Completed')" 
+          [class.text-white]="filterMode() === 'Completed'"
+          [class.border-blue-500]="filterMode() === 'Completed'"
+          [class.bg-gray-400]="filterMode() === 'Completed'"
+          class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm">
+          Completed
+        </button>
+      </div>
       <ul class="space-y-3 pt-2">
-          @if (todoItems().length === 0) {
-           <li class="text-center p-4 rounded-xl shadow-sm">No tasks found</li>
+          @if (filteredTodos().length === 0) {
+            <li class="text-center p-4 rounded-xl shadow-sm">
+            @switch (filterMode()) {
+              @case ("All") {
+                You have no tasks.
+              }
+              @case ("In-progress") {
+                You have completed all your tasks!
+              }
+              @case ("Completed") {
+                You have no tasks completed. 
+              }
+            }
+            </li>
+           
           }
 
-          @for (todo of todoItems(); track todo.id) {
+          @for (todo of filteredTodos(); track todo.id) {
             <li class="flex items-center p-4 rounded-xl shadow-sm">
 
               <input
