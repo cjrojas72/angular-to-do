@@ -13,21 +13,21 @@
           [class.text-white]="filterMode() === 'all'"
           [class.border-blue-500]="filterMode() === 'all'"
           [class.bg-gray-400]="filterMode() === 'all'"
-          class="py-2 px-5 font-semibold border-b-2 border-transparent transition rounded-full cursor-pointer text-sm">
+          class="py-2 px-5 font-semibold border-b-2 border-transparent transition rounded-full cursor-pointer text-sm hover:bg-gray-100">
           All
         </button>
         <button (click)="setFilter('active')" 
           [class.text-white]="filterMode() === 'active'"
           [class.border-blue-500]="filterMode() === 'active'"
           [class.bg-gray-400]="filterMode() === 'active'"
-          class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm">
+          class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm hover:hover:bg-gray-100">
           In Progress
         </button>
         <button (click)="setFilter('completed')" 
           [class.text-white]="filterMode() === 'completed'"
           [class.border-blue-500]="filterMode() === 'completed'"
           [class.bg-gray-400]="filterMode() === 'completed'"
-          class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm">
+          class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm hover:hover:bg-gray-100">
           Completed
         </button>
       </div>
