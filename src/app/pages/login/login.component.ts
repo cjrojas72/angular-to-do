@@ -22,13 +22,6 @@ export class LoginComponent {
   errorMessage = signal<string | null>(null);
   mode = signal<AuthMode>('login');
 
-  // // loginUser = signal("")
-  // // loginPw = signal("")
-
-  // testUser = {
-  //   'email': 'testemail123@gmail.com',
-  //   'pw': 'abc123'
-  // }
 
   setMode(newMode: AuthMode) {
     this.mode.set(newMode);
@@ -38,11 +31,11 @@ export class LoginComponent {
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     pw: ['', [Validators.required, Validators.minLength(6)]]
-  });
+  })
 
   async login(){
     if(!this.loginForm.valid){
-      return console.log("Not valid")
+      return console.log("Not valid");
     }
 
     const email = this.loginForm.value.email ?? '';
@@ -50,7 +43,7 @@ export class LoginComponent {
 
     try{
       this.errorMessage.set(null)
-      await this.authSerivice.signIn(email, pw)
+      await this.authSerivice.signIn(email, pw);
     } catch (err) {
       this.errorMessage.set("Invalid email or password. Please try again.");
     }
@@ -58,11 +51,11 @@ export class LoginComponent {
   }
 
   async loginWithGoogle(){
-    // console.log("clicked")
+    
     try{
-      await this.authSerivice.loginWithGoogle()
+      await this.authSerivice.loginWithGoogle();
     } catch (err){
-      throw err
+      throw err;
     }
   }
 }

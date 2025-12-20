@@ -23,35 +23,7 @@ export class TodosService {
   }
   
 
-  todoItems: Todo[] = [
-    // { 
-    //   userId: "1", 
-    //   id: "1", 
-    //   title: 'Review Angular Signals & Immutability', 
-    //   completed: true, 
-    //   createdAt: new Date(Date.now() - 86400000) 
-    // },
-    // { 
-    //   userId: "1", 
-    //   id: "2", 
-    //   title: 'Plan the weekly schedule', 
-    //   completed: false, 
-    //   createdAt: new Date(Date.now() - 3600000) 
-    // },
-    // { 
-    //   userId: "1", 
-    //   id: "3", 
-    //   title: 'Buy groceries (milk, eggs, bread)', 
-    //   completed: false, 
-    //   createdAt: new Date() 
-    // },
-  ]
-
-
-
-  // getTodos(){
-  //   return this.todoItems
-  // }
+  todoItems: Todo[] = [];
 
   async getTodos(): Promise<Array<Todo>> {
 
@@ -64,7 +36,7 @@ export class TodosService {
 
     const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-          //console.log(`${doc.id} => ${JSON.stringify(doc.data())} user`);
+          
           const {userId, title, completed, createdAt} = doc.data();
 
           let todo: Todo = {
@@ -78,24 +50,11 @@ export class TodosService {
         this.todoItems.push(todo);
       });
 
-      //console.log(this.todoItems)
+     
 
     return this.todoItems;
   }
 
-
-  // updateTodo( id: string): void{
-  //   if(!this.currentUser$){
-  //     return console.log("No logged in user")
-  //   }
-
-  //   let todoItem = this.todoItems.find( todo => todo.id === id)
-
-
-  //   if(todoItem){
-  //     todoItem.completed = !todoItem.completed
-  //   }
-  // }
 
   async updateTodo( id: string, completedStatus: boolean ): Promise<void>{
       if(!this.userId){
@@ -108,14 +67,7 @@ export class TodosService {
       completed: !completedStatus
      })
   }
-  // deleteTodo( id: string): void{
-  //   if(!this.currentUser$){
-  //     return console.log("No logged in user")
-  //   }
 
-  //   this.todoItems = this.todoItems.filter(todo => todo.id !== id)
-
-  // }
 
   async deleteTodo( id: string ): Promise<void>{
     if(!this.userId){
@@ -127,13 +79,7 @@ export class TodosService {
     await deleteDoc(docRef);
   }
 
-  // addTodo( todo: Todo ): void {
-  //   if(!this.currentUser$){
-  //     return console.log("No logged in user")
-  //   }
-    
-  //   this.todoItems.push(todo)
-  // }
+  
   async addTodo( todo: string): Promise<void>{
     if(!this.userId){
       return console.log("No logged in user");

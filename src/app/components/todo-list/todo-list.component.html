@@ -1,7 +1,7 @@
 <div class="card space-y-3">
 
     <div class="text-center space-y-3 my-4">
-      <h2 class="text-4xl font-bold text-gray-900">Your To-dos</h2>
+      <h2 class="text-xl md:text-3xl font-bold text-gray-900">Your To-dos</h2>
     </div>
 
     <div>
@@ -9,24 +9,24 @@
     </div>
     <div>
       <div class="flex justify-center border-gray-100 my-6 space-x-4">
-        <button (click)="setFilter('All')" 
-          [class.text-white]="filterMode() === 'All'"
-          [class.border-blue-500]="filterMode() === 'All'"
-          [class.bg-gray-400]="filterMode() === 'All'"
+        <button (click)="setFilter('all')" 
+          [class.text-white]="filterMode() === 'all'"
+          [class.border-blue-500]="filterMode() === 'all'"
+          [class.bg-gray-400]="filterMode() === 'all'"
           class="py-2 px-5 font-semibold border-b-2 border-transparent transition rounded-full cursor-pointer text-sm">
           All
         </button>
-        <button (click)="setFilter('In-progress')" 
-          [class.text-white]="filterMode() === 'In-progress'"
-          [class.border-blue-500]="filterMode() === 'In-progress'"
-          [class.bg-gray-400]="filterMode() === 'In-progress'"
+        <button (click)="setFilter('active')" 
+          [class.text-white]="filterMode() === 'active'"
+          [class.border-blue-500]="filterMode() === 'active'"
+          [class.bg-gray-400]="filterMode() === 'active'"
           class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm">
           In Progress
         </button>
-        <button (click)="setFilter('Completed')" 
-          [class.text-white]="filterMode() === 'Completed'"
-          [class.border-blue-500]="filterMode() === 'Completed'"
-          [class.bg-gray-400]="filterMode() === 'Completed'"
+        <button (click)="setFilter('completed')" 
+          [class.text-white]="filterMode() === 'completed'"
+          [class.border-blue-500]="filterMode() === 'completed'"
+          [class.bg-gray-400]="filterMode() === 'completed'"
           class="py-2 px-5 font-semibold border-b-2 border-transparent transition cursor-pointer rounded-full text-sm">
           Completed
         </button>
@@ -35,13 +35,13 @@
           @if (filteredTodos().length === 0) {
             <li class="text-center p-4 rounded-xl shadow-sm">
             @switch (filterMode()) {
-              @case ("All") {
+              @case ("all") {
                 You have no tasks.
               }
-              @case ("In-progress") {
+              @case ("active") {
                 You have completed all your tasks!
               }
-              @case ("Completed") {
+              @case ("completed") {
                 You have no tasks completed. 
               }
             }

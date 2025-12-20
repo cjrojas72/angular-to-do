@@ -38,7 +38,6 @@ export class AuthService {
     return this.firebaseService.auth.currentUser;
   }
 
-  // --- Authentication Methods ---
 
   async signUp(email: string, password: string): Promise<void> {
     try {
@@ -61,7 +60,6 @@ export class AuthService {
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     
-    // Optional: Force Google to show the account chooser every time
     provider.setCustomParameters({
       prompt: 'select_account'
     });
@@ -114,15 +112,13 @@ export class AuthService {
     const credential = EmailAuthProvider.credential(user.email, currentPw);
 
     try {
-      // 2. Re-authenticate the user
+    
       await reauthenticateWithCredential(user, credential);
-
-      // 3. Update the password
       await updatePassword(user, newPw);
       
       return { success: true };
     } catch (error: any) {
-      // Common errors: 'auth/wrong-password' or 'auth/too-many-requests'
+      
       throw error;
     }
   }

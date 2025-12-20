@@ -6,7 +6,7 @@ import { Todo } from '../../model/todo.type';
 import { EventsService } from '../../services/events.service';
 import { Subscription } from 'rxjs';
 
-type filter = 'All' | 'In-progress' | 'Completed';
+type filter = 'all' | 'active' | 'completed';
 
 @Component({
   selector: 'app-todo-list',
@@ -21,7 +21,7 @@ export class TodoListComponent implements OnInit, OnDestroy{
   private subscription!: Subscription;
 
   todoItems = signal(<Array<Todo>>([]));
-  filterMode = signal<filter>('All');
+  filterMode = signal<filter>('all');
   filteredTodoItems = signal(<Array<Todo>>([]));
 
   // private initialTodos = [
@@ -70,13 +70,13 @@ export class TodoListComponent implements OnInit, OnDestroy{
 
     //console.log(currentTodos)
 
-    if (status === "All"){
+    if (status === "all"){
       return currentTodos;
     }
-    else if ( status === "Completed"){
+    else if ( status === "completed"){
       return currentTodos.filter(todo => todo.completed);  
     }
-    else if ( status === "In-progress"){
+    else if ( status === "active"){
       return currentTodos.filter(todo => !todo.completed);
     }
 

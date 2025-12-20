@@ -4,7 +4,7 @@ import { AppComponent } from "../../app.component";
 
 @Component({
   selector: 'app-home',
-  imports: [TodoListComponent, AppComponent],
+  imports: [TodoListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

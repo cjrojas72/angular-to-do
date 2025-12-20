@@ -11,27 +11,23 @@ import { EventsService } from '../../services/events.service';
 })
 export class NewTodoInputComponent {
 
-  private todoService = inject(TodosService)
-  private eventService = inject(EventsService)
+  private todoService = inject(TodosService);
+  private eventService = inject(EventsService);
 
-  newTodoTitle = signal('')
-  
-  // tempId = Math.floor(Math.random() * 2000)
-  // tempUser = 5
+  newTodoTitle = signal('');
 
   async addTodo(){
 
-    let todoTitle = this.newTodoTitle().trim()
+    let todoTitle = this.newTodoTitle().trim();
 
     if(!todoTitle){
       return
     }
 
-    // console.log(newTodo)
-    await this.todoService.addTodo(todoTitle)
-    this.newTodoTitle.set('')
+    await this.todoService.addTodo(todoTitle);
+    this.newTodoTitle.set('');
 
-    this.eventService.emitTodoAdded()
+    this.eventService.emitTodoAdded();
 
     
   }

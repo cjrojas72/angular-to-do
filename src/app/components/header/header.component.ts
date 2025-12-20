@@ -13,10 +13,10 @@ export class HeaderComponent implements OnInit {
   showProfileDropdown = signal(false);
   private authService = inject(AuthService);
 
-  private currentUser = this.authService.getCurrentUser()?.email;
+  private currentUser = this.authService.getCurrentUser()?.displayName ? this.authService.getCurrentUser()?.displayName :  this.authService.getCurrentUser()?.email ;
   profileName = signal<string | null | undefined>('profile');
 
-  private router = inject(Router)
+  
 
   logOut(){
     this.authService.signOut();

@@ -20,21 +20,20 @@ export class AppComponent implements OnInit{
   private router = inject(Router)
   private auth = inject(FirebaseService)
 
-  constructor(public authService: AuthService) { // Make authService public if you want to call its methods directly from template
+  constructor(public authService: AuthService) 
+  {
     this.currentUser$ = this.authService.currentUser$;
     
     onAuthStateChanged(this.auth.auth, (user) => {
       if (user) {
-        // If user logs in, send them to home
         this.router.navigate(['/home']);
       } else {
-        // If they log out, send them to login
         this.router.navigate(['']);
       }
     })
   }
 
   ngOnInit(): void {
-    console.log(`User is ${this.currentUser$}`)
+    //console.log(`User is ${this.currentUser$}`);
   }
 }
