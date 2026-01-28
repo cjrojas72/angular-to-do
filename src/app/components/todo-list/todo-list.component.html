@@ -31,7 +31,7 @@
           Completed
         </button>
       </div>
-      <ul class="space-y-3 pt-2">
+      <ul class="space-y-3 pt-2 overflow-y-auto" style="max-height: 700px;">
           @if (filteredTodos().length === 0) {
             <li class="text-center p-4 rounded-xl shadow-sm">
             @switch (filterMode()) {
